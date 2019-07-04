@@ -127,6 +127,53 @@ public class CommonFunctions extends LoadableComponent<CommonFunctions> implemen
 	}
 	
 	
+	public boolean switchToWindowUsingTitle(String strWindowTitle){
+			
+			try {
+				
+				String strMainWindowHandle=objTestBase.getDriver().getWindowHandle();
+				Set<String> openWindow=objTestBase.getDriver().getWindowHandles();
+				
+				
+				if(!openWindow.isEmpty()){
+					
+					for (String windows : openWindow) {
+						
+						String strWindow=objTestBase.getDriver().switchTo().window(windows).getTitle();
+						
+						if(strWindowTitle.equals(strWindow))
+							
+							return true;
+						else
+							objTestBase.getDriver().switchTo().window(strMainWindowHandle);
+					}
+				}
+				return false;
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				return false;
+			}
+			
+			
+		}
+		
+		
+		public boolean mouseHover(By locator) {
+			try {
+				waitForElementPresence(locator);
+				WebElement webElement = objTestBase.getDriver().findElement(locator);
+				Actions actionBuilder = new Actions(objTestBase.getDriver());
+				actionBuilder.moveToElement(webElement).build().perform();
+				return true;
+			}
+			catch (Exception exception) {
+				exception.printStackTrace();
+				return false;
+			}
+		}
+	
+	
 	
 	
 	@Override
